@@ -13,8 +13,6 @@ UAbstractMode::UAbstractMode () {
 
 // Called when the game starts
 void UAbstractMode::BeginPlay () {
-	Super::BeginPlay();
-
 	// ...
 
 }

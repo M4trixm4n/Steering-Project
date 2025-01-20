@@ -7,6 +7,7 @@
 #include "ArrivalMode.h"
 #include "EvadeMode.h"
 #include "FleeMode.h"
+#include "LevelEditor.h"
 #include "PursuitMode.h"
 #include "SeekMode.h"
 
@@ -18,18 +19,26 @@ AVehicle::AVehicle () {
 
 // Called when the game starts or when spawned
 void AVehicle::BeginPlay () {
-	Super::BeginPlay();
 
-	UActorComponent *SeekComp     = AActor::AddComponentByClass(USeekMode::StaticClass(), false, FTransform(), true);
-	AActor::FinishAddComponent(SeekComp, false, FTransform());
-	UActorComponent *FleeComp = AActor::AddComponentByClass(UFleeMode::StaticClass(), false, FTransform(), true);
-	AActor::FinishAddComponent(FleeComp, false, FTransform());
-	UActorComponent *PursuitComp = AActor::AddComponentByClass(UPursuitMode::StaticClass(), false, FTransform(), true);
-	AActor::FinishAddComponent(PursuitComp, false, FTransform());
-	UActorComponent *EvadeComp = AActor::AddComponentByClass(UEvadeMode::StaticClass(), false, FTransform(), true);
-	AActor::FinishAddComponent(EvadeComp, false, FTransform());
-	UActorComponent *ArrivalComp = AActor::AddComponentByClass(UArrivalMode::StaticClass(), false, FTransform(), true);
-	AActor::FinishAddComponent(ArrivalComp, false, FTransform());
+	UActorComponent *SeekComp = NewObject<UActorComponent>(this, USeekMode::StaticClass(), "SeekMode");
+	SeekComp->RegisterComponent();
+	this->AddInstanceComponent(SeekComp);
+	UActorComponent *FleeComp = NewObject<UActorComponent>(this, UFleeMode::StaticClass(), "FleeMode");
+	FleeComp->RegisterComponent();
+	this->AddInstanceComponent(FleeComp);
+	UActorComponent *PursuitComp = NewObject<UActorComponent>(this, UPursuitMode::StaticClass(), "PursuitMode");
+	PursuitComp->RegisterComponent();
+	this->AddInstanceComponent(PursuitComp);
+	UActorComponent *EvadeComp = NewObject<UActorComponent>(this, UEvadeMode::StaticClass(), "EvadeMode");
+	EvadeComp->RegisterComponent();
+	this->AddInstanceComponent(EvadeComp);
+	UActorComponent *ArrivalComp = NewObject<UActorComponent>(this, UArrivalMode::StaticClass(), "ArrivalMode");
+	ArrivalComp->RegisterComponent();
+	this->AddInstanceComponent(ArrivalComp);
+	
+	// Broadcast edit notifications so that level editor details are refreshed (e.g. components tree)
+	FLevelEditorModule& LevelEditor = FModuleManager::LoadModuleChecked<FLevelEditorModule>(TEXT("LevelEditor"));
+	LevelEditor.BroadcastComponentsEdited();
 }
 
 // Called every frame
