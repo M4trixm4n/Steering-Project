@@ -3,6 +3,6 @@
 
 #include "SeekMode.h"
 
-FVector3d USeekMode::ComputeNewVector () {
+FVector USeekMode::ComputeNewVector() {
 	return Super::ComputeNewVector();
 }

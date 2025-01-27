@@ -14,5 +14,5 @@ class STEERINGPROJECT_API UPursuitMode: public UAbstractMode {
 	GENERATED_BODY()
 
 protected:
-	virtual FVector3d ComputeNewVector () override;
+	virtual FVector ComputeNewVector() override;
 };

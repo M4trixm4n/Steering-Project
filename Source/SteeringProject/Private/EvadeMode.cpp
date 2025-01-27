@@ -3,6 +3,6 @@
 
 #include "EvadeMode.h"
 
-FVector3d UEvadeMode::ComputeNewVector () {
+FVector UEvadeMode::ComputeNewVector() {
 	return Super::ComputeNewVector() * -1;
 }

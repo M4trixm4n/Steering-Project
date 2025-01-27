@@ -3,6 +3,6 @@
 
 #include "FleeMode.h"
 
-FVector3d UFleeMode::ComputeNewVector () {
+FVector UFleeMode::ComputeNewVector() {
 	return Super::ComputeNewVector() * -1;
 }

@@ -3,6 +3,6 @@
 
 #include "PursuitMode.h"
 
-FVector3d UPursuitMode::ComputeNewVector () {
+FVector UPursuitMode::ComputeNewVector() {
 	return Super::ComputeNewVector();
 }

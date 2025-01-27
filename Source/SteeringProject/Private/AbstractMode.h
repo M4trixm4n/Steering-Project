@@ -18,13 +18,17 @@ public:
 	UPROPERTY(EditAnywhere)
 	bool bModeIsActive;
 	UPROPERTY(EditAnywhere)
-	FVector3d Target;
+	FVector Target;
 
 protected:
 	// Called when the game starts
 	virtual void BeginPlay () override;
 
-	virtual FVector3d ComputeNewVector () PURE_VIRTUAL(UAbstractMode::ComputeNewVector, {return {0, 0, 0};});
+	virtual FVector ComputeNewVector() PURE_VIRTUAL(UAbstractMode::ComputeNewVector, {return {0, 0, 0};});
+	UFUNCTION(BlueprintCallable)
+	void DisableMode();
+	UFUNCTION(BlueprintCallable)
+	void EnableMode();
 
 public:
 	// Called every frame

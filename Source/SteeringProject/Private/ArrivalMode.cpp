@@ -3,6 +3,6 @@
 
 #include "ArrivalMode.h"
 
-FVector3d UArrivalMode::ComputeNewVector () {
+FVector UArrivalMode::ComputeNewVector() {
 	return Super::ComputeNewVector();
 }

@@ -10,6 +10,7 @@
 #include "LevelEditor.h"
 #include "PursuitMode.h"
 #include "SeekMode.h"
+#include "SteeringGameState.h"
 
 // Sets default values
 AVehicle::AVehicle () {
@@ -39,6 +40,13 @@ void AVehicle::BeginPlay () {
 	// Broadcast edit notifications so that level editor details are refreshed (e.g. components tree)
 	FLevelEditorModule& LevelEditor = FModuleManager::LoadModuleChecked<FLevelEditorModule>(TEXT("LevelEditor"));
 	LevelEditor.BroadcastComponentsEdited();
+
+	ASteeringGameState* GameState = Cast<ASteeringGameState>(GetWorld()->GetGameState());
+	GameState->SeekMode = Cast<USeekMode>(SeekComp);
+	GameState->FleeMode = Cast<UFleeMode>(FleeComp);
+	GameState->PursuitMode = Cast<UPursuitMode>(PursuitComp);
+	GameState->EvadeMode = Cast<UEvadeMode>(EvadeComp);
+	GameState->ArrivalMode = Cast<UArrivalMode>(ArrivalComp);	
 }
 
 // Called every frame

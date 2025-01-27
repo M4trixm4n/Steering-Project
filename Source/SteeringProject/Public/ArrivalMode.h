@@ -14,5 +14,5 @@ class STEERINGPROJECT_API UArrivalMode: public USeekMode {
 	GENERATED_BODY()
 
 protected:
-	virtual FVector3d ComputeNewVector () override;
+	virtual FVector ComputeNewVector() override;
 };

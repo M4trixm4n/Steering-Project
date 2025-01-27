@@ -7,13 +7,9 @@
 #include "SteeringProjectGameMode.generated.h"
 
 UCLASS(minimalapi)
-class ASteeringProjectGameMode : public AGameModeBase
-{
+class ASteeringProjectGameMode: public AGameModeBase {
 	GENERATED_BODY()
 
 public:
 	ASteeringProjectGameMode();
 };
-
-
-
