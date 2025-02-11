@@ -13,7 +13,7 @@ ASteeringProjectGameMode::ASteeringProjectGameMode() {
 
 	// set default pawn class to our Blueprinted character
 	static ConstructorHelpers::FClassFinder<APawn> PlayerPawnBPClass(
-			TEXT("/Game/TopDown/Blueprints/BP_TopDownCharacter"));
+			TEXT("/Game/Steering/BP_Vehicle"));
 	if (PlayerPawnBPClass.Class != nullptr) {
 		DefaultPawnClass = PlayerPawnBPClass.Class;
 	}

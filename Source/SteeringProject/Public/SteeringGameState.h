@@ -21,7 +21,7 @@ class STEERINGPROJECT_API ASteeringGameState: public AGameStateBase {
 public:
 	FVector Target;
 
-	void SetTarget(const FVector &NewTarget);
+	void SetTarget(const FVector NewTarget);
 	FVector GetTarget() const;
 
 

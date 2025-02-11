@@ -3,7 +3,7 @@
 
 #include "SteeringGameState.h"
 
-void ASteeringGameState::SetTarget(const FVector &NewTarget) {
+void ASteeringGameState::SetTarget(const FVector NewTarget) {
 	Target = NewTarget;
 }
 

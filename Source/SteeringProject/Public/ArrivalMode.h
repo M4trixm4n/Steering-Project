@@ -10,8 +10,12 @@
  * 
  */
 UCLASS()
-class STEERINGPROJECT_API UArrivalMode: public USeekMode {
+class STEERINGPROJECT_API UArrivalMode: public UAbstractMode {
 	GENERATED_BODY()
+
+public:
+	UPROPERTY(EditAnywhere)
+	double SlowingDistance = 500.f;
 
 protected:
 	virtual FVector ComputeNewVector() override;

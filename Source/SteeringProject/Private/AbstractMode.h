@@ -24,6 +24,9 @@ protected:
 	// Called when the game starts
 	virtual void BeginPlay () override;
 
+
+	FVector PreviousVelocity = {0, 0, 0};
+
 	virtual FVector ComputeNewVector() PURE_VIRTUAL(UAbstractMode::ComputeNewVector, {return {0, 0, 0};});
 	UFUNCTION(BlueprintCallable)
 	void DisableMode();

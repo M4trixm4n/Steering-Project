@@ -25,6 +25,8 @@ ASteeringProjectPlayerController::ASteeringProjectPlayerController() {
 void ASteeringProjectPlayerController::BeginPlay() {
 	// Call the base class  
 	Super::BeginPlay();
+	CachedDestination = FVector::ZeroVector;
+	Cast<ASteeringGameState>(GetWorld()->GetGameState())->SetTarget(CachedDestination);
 }
 
 void ASteeringProjectPlayerController::SetupInputComponent() {

@@ -2,7 +2,10 @@
 
 
 #include "SeekMode.h"
+#include "Vehicle.h"
+#include "GameFramework/PawnMovementComponent.h"
 
 FVector USeekMode::ComputeNewVector() {
-	return Super::ComputeNewVector();
+	const FVector DesiredVelocity = (Target - GetOwner()->GetActorLocation()).GetSafeNormal() * Cast<AVehicle>(GetOwner())->MaxSpeed;
+	return DesiredVelocity - PreviousVelocity;
 }
