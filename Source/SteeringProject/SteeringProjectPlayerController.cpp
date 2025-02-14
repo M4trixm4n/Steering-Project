@@ -68,7 +68,6 @@ void ASteeringProjectPlayerController::OnInputStarted() {
 
 	// If we hit a surface, cache the location
 	if (bHitSuccessful) {
-		UE_LOG(LogTemp, Warning, TEXT ("HitSuccessful"));
 		CachedDestination = Hit.Location;
 	}
 	Cast<ASteeringGameState>(GetWorld()->GetGameState())->SetTarget(CachedDestination);

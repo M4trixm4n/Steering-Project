@@ -44,16 +44,9 @@ void AVehicle::BeginPlay () {
 	UActorComponent *FleeComp = NewObject<UActorComponent>(this, UFleeMode::StaticClass(), "FleeMode");
 	FleeComp->RegisterComponent();
 	this->AddInstanceComponent(FleeComp);
-	UActorComponent *PursuitComp = NewObject<UActorComponent>(this, UPursuitMode::StaticClass(), "PursuitMode");
-	PursuitComp->RegisterComponent();
-	this->AddInstanceComponent(PursuitComp);
-	UActorComponent *EvadeComp = NewObject<UActorComponent>(this, UEvadeMode::StaticClass(), "EvadeMode");
-	EvadeComp->RegisterComponent();
-	this->AddInstanceComponent(EvadeComp);
 	UActorComponent *ArrivalComp = NewObject<UActorComponent>(this, UArrivalMode::StaticClass(), "ArrivalMode");
 	ArrivalComp->RegisterComponent();
 	this->AddInstanceComponent(ArrivalComp);
-	
 	
 	// Broadcast edit notifications so that level editor details are refreshed (e.g. components tree)
 	FLevelEditorModule& LevelEditor = FModuleManager::LoadModuleChecked<FLevelEditorModule>(TEXT("LevelEditor"));
@@ -62,8 +55,6 @@ void AVehicle::BeginPlay () {
 	ASteeringGameState* GameState = Cast<ASteeringGameState>(GetWorld()->GetGameState());
 	GameState->SeekMode = Cast<USeekMode>(SeekComp);
 	GameState->FleeMode = Cast<UFleeMode>(FleeComp);
-	GameState->PursuitMode = Cast<UPursuitMode>(PursuitComp);
-	GameState->EvadeMode = Cast<UEvadeMode>(EvadeComp);
 	GameState->ArrivalMode = Cast<UArrivalMode>(ArrivalComp);
 
 }

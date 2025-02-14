@@ -15,4 +15,10 @@ class STEERINGPROJECT_API UPursuitMode: public UAbstractMode {
 
 protected:
 	virtual FVector ComputeNewVector() override;
+
+public:
+	virtual void TickComponent(float DeltaTime,
+			ELevelTick TickType,
+			FActorComponentTickFunction *ThisTickFunction
+			) override;
 };

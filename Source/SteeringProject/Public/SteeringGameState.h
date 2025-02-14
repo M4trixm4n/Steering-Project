@@ -24,6 +24,7 @@ public:
 	void SetTarget(const FVector NewTarget);
 	FVector GetTarget() const;
 
+	FVector PreviousVelocity;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="ModeComponents")
 	USeekMode* SeekMode;

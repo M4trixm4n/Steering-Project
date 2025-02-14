@@ -7,28 +7,23 @@
 #include "SteeringProjectCharacter.generated.h"
 
 UCLASS(Blueprintable)
-class ASteeringProjectCharacter : public ACharacter
-{
+class ASteeringProjectCharacter: public ACharacter {
 	GENERATED_BODY()
 
 public:
 	ASteeringProjectCharacter();
+	
+	UPROPERTY(EditAnywhere)
+	float Mass = 50.0f;
+	UPROPERTY(EditAnywhere)
+	float MaxForce = 400.0f;
+	UPROPERTY(EditAnywhere)
+	float MaxSpeed = 400.0f;
 
 	// Called every frame.
 	virtual void Tick(float DeltaSeconds) override;
 
-	/** Returns TopDownCameraComponent subobject **/
-	FORCEINLINE class UCameraComponent* GetTopDownCameraComponent() const { return TopDownCameraComponent; }
-	/** Returns CameraBoom subobject **/
-	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
+protected:
+	virtual void BeginPlay() override;
 
-private:
-	/** Top down camera */
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
-	class UCameraComponent* TopDownCameraComponent;
-
-	/** Camera boom positioning the camera above the character */
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
-	class USpringArmComponent* CameraBoom;
 };
-
