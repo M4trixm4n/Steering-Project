@@ -19,8 +19,7 @@ void UPursuitMode::TickComponent(float DeltaTime, ELevelTick TickType, FActorCom
 	ASteeringProjectCharacter *Owner = Cast<ASteeringProjectCharacter>(GetOwner());
 	if (bModeIsActive) {
 		if (Target != Cast<ASteeringGameState>(GetWorld()->GetGameState())->GetTarget())
-			Target = Cast<
-				ASteeringGameState>(GetWorld()->GetGameState())->GetTarget();
+			Target = Cast<ASteeringGameState>(GetWorld()->GetGameState())->GetTarget();
 		FVector SteeringDirection = ComputeNewVector();
 		FVector SteeringForce     = SteeringDirection.GetClampedToMaxSize(Owner->MaxForce);
 		FVector Acceleration      = SteeringForce / Owner->Mass;
@@ -34,14 +33,5 @@ void UPursuitMode::TickComponent(float DeltaTime, ELevelTick TickType, FActorCom
 		FRotator NewRotation      = FMath::RInterpTo(CurrentRotation, SteeringRotation, DeltaTime, 5);
 		NewRotation.Pitch         = 0.f;
 		Owner->SetActorRotation(NewRotation);
-		// UE_LOG(LogTemp, Warning, TEXT ("Steering Direction : %lf, %lf, %lf"), SteeringDirection.X, SteeringDirection.Y,
-		//        SteeringDirection.Z);
-		// UE_LOG(LogTemp, Warning, TEXT ("SteeringForce : %lf, %lf, %lf"), SteeringForce.X, SteeringForce.Y,
-		//        SteeringForce.Z);
-		// UE_LOG(LogTemp, Warning, TEXT ("Acceleration : %lf, %lf, %lf"), Acceleration.X, Acceleration.Y, Acceleration.Z);
-		// UE_LOG(LogTemp, Warning, TEXT ("Previous Velocity : %lf, %lf, %lf"), PreviousVelocity.X, PreviousVelocity.Y,
-		//        PreviousVelocity.Z);
-		// UE_LOG(LogTemp, Warning, TEXT ("Velocity : %lf, %lf, %lf"), Velocity.X, Velocity.Y, Velocity.Z);
-		// UE_LOG(LogTemp, Warning, TEXT ("Result : %lf, %lf, %lf"), Result.X, Result.Y, Result.Z);
 	}
 }

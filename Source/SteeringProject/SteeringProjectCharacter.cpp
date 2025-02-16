@@ -3,7 +3,7 @@
 #include "SteeringProjectCharacter.h"
 
 #include "EvadeMode.h"
-#include "LevelEditor.h"
+// #include "LevelEditor.h"
 #include "PursuitMode.h"
 #include "SteeringGameState.h"
 #include "UObject/ConstructorHelpers.h"
@@ -43,8 +43,8 @@ void ASteeringProjectCharacter::BeginPlay() {
 	EvadeComp->RegisterComponent();
 	this->AddInstanceComponent(EvadeComp);
 	
-	FLevelEditorModule& LevelEditor = FModuleManager::LoadModuleChecked<FLevelEditorModule>(TEXT("LevelEditor"));
-	LevelEditor.BroadcastComponentsEdited();
+	// FLevelEditorModule& LevelEditor = FModuleManager::LoadModuleChecked<FLevelEditorModule>(TEXT("LevelEditor"));
+	// LevelEditor.BroadcastComponentsEdited();
 
 	ASteeringGameState* GameState = Cast<ASteeringGameState>(GetWorld()->GetGameState());
 	GameState->PursuitMode = Cast<UPursuitMode>(PursuitComp);

@@ -3,14 +3,11 @@
 
 #include "Vehicle.h"
 
-#include "AbstractMode.h"
 #include "ArrivalMode.h"
 #include "CircuitMode.h"
-#include "EvadeMode.h"
 #include "FleeMode.h"
-#include "LevelEditor.h"
+// #include "LevelEditor.h"
 #include "OneWayMode.h"
-#include "PursuitMode.h"
 #include "SeekMode.h"
 #include "SteeringGameState.h"
 #include "TwoWayMode.h"
@@ -61,8 +58,8 @@ void AVehicle::BeginPlay () {
 	this->AddInstanceComponent(TwoWayComp);
 	
 	// Broadcast edit notifications so that level editor details are refreshed (e.g. components tree)
-	FLevelEditorModule& LevelEditor = FModuleManager::LoadModuleChecked<FLevelEditorModule>(TEXT("LevelEditor"));
-	LevelEditor.BroadcastComponentsEdited();
+	// FLevelEditorModule& LevelEditor = FModuleManager::LoadModuleChecked<FLevelEditorModule>(TEXT("LevelEditor"));
+	// LevelEditor.BroadcastComponentsEdited();
 
 	ASteeringGameState* GameState = Cast<ASteeringGameState>(GetWorld()->GetGameState());
 	GameState->SeekMode = Cast<USeekMode>(SeekComp);
