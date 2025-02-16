@@ -71,6 +71,10 @@ void ASteeringProjectPlayerController::OnInputStarted() {
 		CachedDestination = Hit.Location;
 	}
 	Cast<ASteeringGameState>(GetWorld()->GetGameState())->SetTarget(CachedDestination);
+	ASteeringGameState *GameState = Cast<ASteeringGameState>(GetWorld()->GetGameState());
+	if (GameState->CircuitMode->bModeIsActive || GameState->OneWayMode->bModeIsActive || GameState->TwoWayMode->bModeIsActive) {
+		GameState->CircuitPoints.Add(CachedDestination);
+	}
 }
 
 // Triggered every frame when the input is held down

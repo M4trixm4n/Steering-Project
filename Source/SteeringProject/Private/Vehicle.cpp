@@ -5,12 +5,15 @@
 
 #include "AbstractMode.h"
 #include "ArrivalMode.h"
+#include "CircuitMode.h"
 #include "EvadeMode.h"
 #include "FleeMode.h"
 #include "LevelEditor.h"
+#include "OneWayMode.h"
 #include "PursuitMode.h"
 #include "SeekMode.h"
 #include "SteeringGameState.h"
+#include "TwoWayMode.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
@@ -47,6 +50,15 @@ void AVehicle::BeginPlay () {
 	UActorComponent *ArrivalComp = NewObject<UActorComponent>(this, UArrivalMode::StaticClass(), "ArrivalMode");
 	ArrivalComp->RegisterComponent();
 	this->AddInstanceComponent(ArrivalComp);
+	UActorComponent *CircuitComp = NewObject<UActorComponent>(this, UCircuitMode::StaticClass(), "UCircuitMode");
+	CircuitComp->RegisterComponent();
+	this->AddInstanceComponent(CircuitComp);
+	UActorComponent *OneWayComp = NewObject<UActorComponent>(this, UOneWayMode::StaticClass(), "UOneWayMode");
+	OneWayComp->RegisterComponent();
+	this->AddInstanceComponent(OneWayComp);
+	UActorComponent *TwoWayComp = NewObject<UActorComponent>(this, UTwoWayMode::StaticClass(), "UTwoWayMode");
+	TwoWayComp->RegisterComponent();
+	this->AddInstanceComponent(TwoWayComp);
 	
 	// Broadcast edit notifications so that level editor details are refreshed (e.g. components tree)
 	FLevelEditorModule& LevelEditor = FModuleManager::LoadModuleChecked<FLevelEditorModule>(TEXT("LevelEditor"));
@@ -56,6 +68,9 @@ void AVehicle::BeginPlay () {
 	GameState->SeekMode = Cast<USeekMode>(SeekComp);
 	GameState->FleeMode = Cast<UFleeMode>(FleeComp);
 	GameState->ArrivalMode = Cast<UArrivalMode>(ArrivalComp);
+	GameState->CircuitMode = Cast<UCircuitMode>(CircuitComp);
+	GameState->OneWayMode = Cast<UOneWayMode>(OneWayComp);
+	GameState->TwoWayMode = Cast<UTwoWayMode>(TwoWayComp);
 
 }
 
