@@ -19,6 +19,10 @@ public:
 	bool bModeIsActive;
 	UPROPERTY(EditAnywhere)
 	FVector Target;
+	UFUNCTION(BlueprintCallable)
+	void DisableMode();
+	UFUNCTION(BlueprintCallable)
+	void EnableMode();
 
 protected:
 	// Called when the game starts
@@ -28,10 +32,6 @@ protected:
 	FVector PreviousVelocity = {0, 0, 0};
 
 	virtual FVector ComputeNewVector() PURE_VIRTUAL(UAbstractMode::ComputeNewVector, {return {0, 0, 0};});
-	UFUNCTION(BlueprintCallable)
-	void DisableMode();
-	UFUNCTION(BlueprintCallable)
-	void EnableMode();
 
 public:
 	// Called every frame

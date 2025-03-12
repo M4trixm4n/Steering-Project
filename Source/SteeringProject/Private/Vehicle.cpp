@@ -2,77 +2,66 @@
 
 
 #include "Vehicle.h"
-
 #include "ArrivalMode.h"
-#include "CircuitMode.h"
-#include "FleeMode.h"
-// #include "LevelEditor.h"
-#include "OneWayMode.h"
-#include "SeekMode.h"
-#include "SteeringGameState.h"
-#include "TwoWayMode.h"
 #include "Camera/CameraComponent.h"
-#include "GameFramework/CharacterMovementComponent.h"
+#include "Components/BoxComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 AVehicle::AVehicle () {
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+	RootComponent = CreateDefaultSubobject<UBoxComponent>("Root");
+	RootComponent->SetRelativeLocation(FVector(-30, -30, 45));
+	RootComponent->SetRelativeScale3D(FVector(2, 2, 2));
 
 	bUseControllerRotationPitch = false;
 	bUseControllerRotationYaw = false;
 	bUseControllerRotationRoll = false;
-	
-	GetCharacterMovement()->bOrientRotationToMovement = true; // Rotate character to moving direction
-	GetCharacterMovement()->RotationRate = FRotator(0.f, 640.f, 0.f);
-	GetCharacterMovement()->bConstrainToPlane = true;
-	GetCharacterMovement()->bSnapToPlaneAtStart = true;
 	
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("TopDownCamera"));
 	Camera->SetupAttachment(RootComponent);
 	Camera->bUsePawnControlRotation = false; // Camera does not rotate relative to arm
 	Camera->SetRelativeRotation(FRotator(-90.f, 0.f, 0.f));
 	Camera->SetWorldLocation(FVector(0, 0, 4000));
+
+	PathFindingComp = CreateDefaultSubobject<UPathFindingComponent>(TEXT("PathFinding"));
+	SeekComp = CreateDefaultSubobject<USeekMode>(TEXT("SeekMode"));
+	ArrivalComp = CreateDefaultSubobject<UArrivalMode>(TEXT("ArrivalMode"));
 }
 
 // Called when the game starts or when spawned
 void AVehicle::BeginPlay () {
-
-	UActorComponent *SeekComp = NewObject<UActorComponent>(this, USeekMode::StaticClass(), "SeekMode");
-	SeekComp->RegisterComponent();
-	this->AddInstanceComponent(SeekComp);
-	UActorComponent *FleeComp = NewObject<UActorComponent>(this, UFleeMode::StaticClass(), "FleeMode");
-	FleeComp->RegisterComponent();
-	this->AddInstanceComponent(FleeComp);
-	UActorComponent *ArrivalComp = NewObject<UActorComponent>(this, UArrivalMode::StaticClass(), "ArrivalMode");
-	ArrivalComp->RegisterComponent();
-	this->AddInstanceComponent(ArrivalComp);
-	UActorComponent *CircuitComp = NewObject<UActorComponent>(this, UCircuitMode::StaticClass(), "UCircuitMode");
-	CircuitComp->RegisterComponent();
-	this->AddInstanceComponent(CircuitComp);
-	UActorComponent *OneWayComp = NewObject<UActorComponent>(this, UOneWayMode::StaticClass(), "UOneWayMode");
-	OneWayComp->RegisterComponent();
-	this->AddInstanceComponent(OneWayComp);
-	UActorComponent *TwoWayComp = NewObject<UActorComponent>(this, UTwoWayMode::StaticClass(), "UTwoWayMode");
-	TwoWayComp->RegisterComponent();
-	this->AddInstanceComponent(TwoWayComp);
+	Super::BeginPlay();
+	
+	// PathFindingComp->Activate();
+	// UActorComponent *Seek = NewObject<UActorComponent>(this, USeekMode::StaticClass(), "SeekMode");
+	// Seek->RegisterComponent();
+	// this->AddInstanceComponent(Seek);
+	// UActorComponent *Arrival = NewObject<UActorComponent>(this, UArrivalMode::StaticClass(), "ArrivalMode");
+	// Arrival->RegisterComponent();
+	// this->AddInstanceComponent(Arrival);
 	
 	// Broadcast edit notifications so that level editor details are refreshed (e.g. components tree)
 	// FLevelEditorModule& LevelEditor = FModuleManager::LoadModuleChecked<FLevelEditorModule>(TEXT("LevelEditor"));
 	// LevelEditor.BroadcastComponentsEdited();
 
-	ASteeringGameState* GameState = Cast<ASteeringGameState>(GetWorld()->GetGameState());
-	GameState->SeekMode = Cast<USeekMode>(SeekComp);
-	GameState->FleeMode = Cast<UFleeMode>(FleeComp);
-	GameState->ArrivalMode = Cast<UArrivalMode>(ArrivalComp);
-	GameState->CircuitMode = Cast<UCircuitMode>(CircuitComp);
-	GameState->OneWayMode = Cast<UOneWayMode>(OneWayComp);
-	GameState->TwoWayMode = Cast<UTwoWayMode>(TwoWayComp);
+	// SeekComp = Cast<USeekMode>(Seek);
+	// ArrivalComp = Cast<UArrivalMode>(Arrival);
+
+	TArray<AActor*> FoundActors;
+	UGameplayStatics::GetAllActorsWithTag(GetWorld(), FName("PlayerStart"), FoundActors);
+	if (FoundActors.Num() > 0) {
+		PathFindingComp->CurrentIntersection = Cast<AIntersection>(FoundActors[0]);
+	}
 
 }
 
 // Called every frame
 void AVehicle::Tick (float DeltaTime) {
+	
 	Super::Tick(DeltaTime);
+	UE_LOG(LogTemp, Warning, TEXT ("Enable Mode Previous Velocity"));
+
 
 }

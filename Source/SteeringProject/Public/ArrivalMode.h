@@ -15,7 +15,7 @@ class STEERINGPROJECT_API UArrivalMode: public UAbstractMode {
 
 public:
 	UPROPERTY(EditAnywhere)
-	double SlowingDistance = 500.f;
+	double SlowingDistance = 700.f;
 
 protected:
 	virtual FVector ComputeNewVector() override;

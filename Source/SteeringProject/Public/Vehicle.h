@@ -3,35 +3,47 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "ArrivalMode.h"
+#include "PathFindingComponent.h"
+#include "SeekMode.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/Actor.h"
 #include "GameFramework/Character.h"
 #include "Vehicle.generated.h"
 
-UCLASS(Blueprintable)
-class STEERINGPROJECT_API AVehicle: public ACharacter {
+UCLASS(Blueprintable, BlueprintType)
+class STEERINGPROJECT_API AVehicle: public APawn {
 	GENERATED_BODY()
 
 public:
 	// Sets default values for this actor's properties
-	AVehicle ();
+	AVehicle();
 
 	UPROPERTY(EditAnywhere)
-	float Mass = 50.0f;
+	float Mass = 40.0f;
 	UPROPERTY(EditAnywhere)
-	float MaxForce = 10.0f;
+	float MaxForce = 25.0f;
 	UPROPERTY(EditAnywhere)
-	float MaxSpeed = 500.0f;
+	float MaxSpeed = 400.0f;
 
 	UPROPERTY(EditAnywhere)
-	UCameraComponent * Camera;
+	UCameraComponent *Camera;
+
+	UPROPERTY(BlueprintReadOnly)
+	USeekMode *SeekComp;
+
+	UPROPERTY(BlueprintReadOnly)
+	UArrivalMode *ArrivalComp;
+
+	UPROPERTY(EditAnywhere)
+	UPathFindingComponent *PathFindingComp;
 
 protected:
 	// Called when the game starts or when spawned
-	virtual void BeginPlay () override;
-	
+	virtual void BeginPlay() override;
+
 public:
 	// Called every frame
-	virtual void Tick (float DeltaTime) override;
+	virtual void Tick(float DeltaTime) override;
 
 };

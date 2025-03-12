@@ -3,6 +3,9 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "ArrivalMode.h"
+#include "PathFindingComponent.h"
+#include "SeekMode.h"
 #include "GameFramework/Character.h"
 #include "SteeringProjectCharacter.generated.h"
 
@@ -19,6 +22,15 @@ public:
 	float MaxForce = 400.0f;
 	UPROPERTY(EditAnywhere)
 	float MaxSpeed = 400.0f;
+	
+	UPROPERTY(BlueprintReadOnly)
+	USeekMode *SeekComp;
+
+	UPROPERTY(BlueprintReadOnly)
+	UArrivalMode *ArrivalComp;
+	
+	UPROPERTY(EditAnywhere)
+	UPathFindingComponent *PathFindingComp;
 
 	// Called every frame.
 	virtual void Tick(float DeltaSeconds) override;

@@ -1,16 +1,11 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
 #include "SteeringProjectCharacter.h"
-
-#include "EvadeMode.h"
-// #include "LevelEditor.h"
-#include "PursuitMode.h"
-#include "SteeringGameState.h"
 #include "UObject/ConstructorHelpers.h"
 #include "GameFramework/CharacterMovementComponent.h"
-#include "GameFramework/PlayerController.h"
 #include "Materials/Material.h"
 #include "Engine/World.h"
+#include "Kismet/GameplayStatics.h"
 
 ASteeringProjectCharacter::ASteeringProjectCharacter() {
 	// Don't rotate character to camera direction
@@ -36,17 +31,23 @@ void ASteeringProjectCharacter::Tick(float DeltaSeconds) {
 void ASteeringProjectCharacter::BeginPlay() {
 	Super::BeginPlay();
 	
-	UActorComponent *PursuitComp = NewObject<UActorComponent>(this, UPursuitMode::StaticClass(), "PursuitMode");
-	PursuitComp->RegisterComponent();
-	this->AddInstanceComponent(PursuitComp);
-	UActorComponent *EvadeComp = NewObject<UActorComponent>(this, UEvadeMode::StaticClass(), "EvadeMode");
-	EvadeComp->RegisterComponent();
-	this->AddInstanceComponent(EvadeComp);
+	UActorComponent *Seek = NewObject<UActorComponent>(this, USeekMode::StaticClass(), "SeekMode");
+	Seek->RegisterComponent();
+	this->AddInstanceComponent(Seek);
+	UActorComponent *Arrival = NewObject<UActorComponent>(this, UArrivalMode::StaticClass(), "ArrivalMode");
+	Arrival->RegisterComponent();
+	this->AddInstanceComponent(Arrival);
 	
+	// Broadcast edit notifications so that level editor details are refreshed (e.g. components tree)
 	// FLevelEditorModule& LevelEditor = FModuleManager::LoadModuleChecked<FLevelEditorModule>(TEXT("LevelEditor"));
 	// LevelEditor.BroadcastComponentsEdited();
 
-	ASteeringGameState* GameState = Cast<ASteeringGameState>(GetWorld()->GetGameState());
-	GameState->PursuitMode = Cast<UPursuitMode>(PursuitComp);
-	GameState->EvadeMode = Cast<UEvadeMode>(EvadeComp);
+	SeekComp = Cast<USeekMode>(Seek);
+	ArrivalComp = Cast<UArrivalMode>(Arrival);
+	
+	TArray<AActor*> FoundActors;
+	UGameplayStatics::GetAllActorsWithTag(GetWorld(), FName("AIStart"), FoundActors);
+	if (FoundActors.Num() > 0) {
+		PathFindingComp->CurrentIntersection = Cast<AIntersection>(FoundActors[0]);
+	}
 }

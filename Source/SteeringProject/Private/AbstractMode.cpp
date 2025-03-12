@@ -2,11 +2,8 @@
 
 
 #include "AbstractMode.h"
-
 #include "SteeringGameState.h"
-#include "VectorUtil.h"
 #include "Vehicle.h"
-#include "GameFramework/PawnMovementComponent.h"
 
 // Sets default values for this component's properties
 UAbstractMode::UAbstractMode() {

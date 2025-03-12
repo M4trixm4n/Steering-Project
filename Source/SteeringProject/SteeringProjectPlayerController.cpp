@@ -5,7 +5,6 @@
 #include "Blueprint/AIBlueprintHelperLibrary.h"
 #include "NiagaraSystem.h"
 #include "NiagaraFunctionLibrary.h"
-#include "SteeringProjectCharacter.h"
 #include "Engine/World.h"
 #include "EnhancedInputComponent.h"
 #include "InputActionValue.h"
@@ -65,16 +64,13 @@ void ASteeringProjectPlayerController::OnInputStarted() {
 	bool bHitSuccessful = false;
 
 	bHitSuccessful = GetHitResultUnderCursor(ECollisionChannel::ECC_Visibility, true, Hit);
-
+	
 	// If we hit a surface, cache the location
-	if (bHitSuccessful) {
+	if (bHitSuccessful && (Hit.Location.Z < 49 || Hit.GetActor()->GetClass())) { //
+		// GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, FString("Hit : ") + std::to_string(Hit.Location.X).c_str() + " " + std::to_string(Hit.Location.Y).c_str() + " " + std::to_string(Hit.Location.Z).c_str());
 		CachedDestination = Hit.Location;
 	}
 	Cast<ASteeringGameState>(GetWorld()->GetGameState())->SetTarget(CachedDestination);
-	ASteeringGameState *GameState = Cast<ASteeringGameState>(GetWorld()->GetGameState());
-	if (GameState->CircuitMode->bModeIsActive || GameState->OneWayMode->bModeIsActive || GameState->TwoWayMode->bModeIsActive) {
-		GameState->CircuitPoints.Add(CachedDestination);
-	}
 }
 
 // Triggered every frame when the input is held down
