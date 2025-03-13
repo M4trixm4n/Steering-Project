@@ -32,7 +32,6 @@ public:
 	UPROPERTY(EditAnywhere)
 	UPathFindingComponent *PathFindingComp;
 
-	// Called every frame.
 	virtual void Tick(float DeltaSeconds) override;
 
 protected:

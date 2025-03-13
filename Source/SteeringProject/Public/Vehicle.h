@@ -8,7 +8,6 @@
 #include "SeekMode.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/Actor.h"
-#include "GameFramework/Character.h"
 #include "Vehicle.generated.h"
 
 UCLASS(Blueprintable, BlueprintType)
@@ -16,7 +15,6 @@ class STEERINGPROJECT_API AVehicle: public APawn {
 	GENERATED_BODY()
 
 public:
-	// Sets default values for this actor's properties
 	AVehicle();
 
 	UPROPERTY(EditAnywhere)
@@ -39,11 +37,9 @@ public:
 	UPathFindingComponent *PathFindingComp;
 
 protected:
-	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 public:
-	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 };

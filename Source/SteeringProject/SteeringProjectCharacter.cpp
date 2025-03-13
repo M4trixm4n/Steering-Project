@@ -13,13 +13,11 @@ ASteeringProjectCharacter::ASteeringProjectCharacter() {
 	bUseControllerRotationYaw   = false;
 	bUseControllerRotationRoll  = false;
 
-	// Configure character movement
 	GetCharacterMovement()->bOrientRotationToMovement = true; // Rotate character to moving direction
 	GetCharacterMovement()->RotationRate              = FRotator(0.f, 640.f, 0.f);
 	GetCharacterMovement()->bConstrainToPlane         = true;
 	GetCharacterMovement()->bSnapToPlaneAtStart       = true;
 
-	// Activate ticking in order to update the cursor every frame.
 	PrimaryActorTick.bCanEverTick          = true;
 	PrimaryActorTick.bStartWithTickEnabled = true;
 }
@@ -38,10 +36,6 @@ void ASteeringProjectCharacter::BeginPlay() {
 	Arrival->RegisterComponent();
 	this->AddInstanceComponent(Arrival);
 	
-	// Broadcast edit notifications so that level editor details are refreshed (e.g. components tree)
-	// FLevelEditorModule& LevelEditor = FModuleManager::LoadModuleChecked<FLevelEditorModule>(TEXT("LevelEditor"));
-	// LevelEditor.BroadcastComponentsEdited();
-
 	SeekComp = Cast<USeekMode>(Seek);
 	ArrivalComp = Cast<UArrivalMode>(Arrival);
 	

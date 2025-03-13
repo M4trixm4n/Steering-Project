@@ -41,7 +41,6 @@ void UPathFindingComponent::TickComponent(float DeltaTime,
 		Path.RemoveAt(0);
 		Actions             = CurrentIntersection->GetIntersectionActions(CurrentDirection, Path[0]);
 		CurrentDirection    = Path[0];
-		// CurrentIntersection->SetActorLocation({CurrentIntersection->GetActorLocation().X, CurrentIntersection->GetActorLocation().Y, 100});
 		DrawDebugPoint(GetWorld(), CurrentIntersection->GetActorLocation(), 10.0f, FColor::Blue, false, 30.f);
 	}
 	if (!CurrentAction) {
@@ -54,11 +53,10 @@ void UPathFindingComponent::TickComponent(float DeltaTime,
 	                           {GetOwner()->GetActorLocation().X, GetOwner()->GetActorLocation().Y, 0.f}) < 60) {
 		CurrentAction.Destination = FVector::ZeroVector;
 	}
-	// if destination reached
 }
 
 void UPathFindingComponent::FindPath() {
-	Path.Append({EDirection::North, EDirection::West, EDirection::North, EDirection::North, EDirection::West, EDirection::West, EDirection::South});
+	Path.Append({EDirection::North, EDirection::West, EDirection::South, EDirection::East});
 }
 
 void UPathFindingComponent::EnableCorrectMode() const {

@@ -5,15 +5,12 @@
 #include "SteeringGameState.h"
 #include "Vehicle.h"
 
-// Sets default values for this component's properties
 UAbstractMode::UAbstractMode() {
 	PrimaryComponentTick.bCanEverTick = true;
 
 	bModeIsActive = false;
 }
 
-
-// Called when the game starts
 void UAbstractMode::BeginPlay() {
 	Super::BeginPlay();
 	// ...
@@ -25,7 +22,6 @@ void UAbstractMode::DisableMode() {
 		bModeIsActive = false;
 		if (!Cast<ASteeringGameState>(GetWorld()->GetGameState())->PreviousVelocity.IsNearlyZero(0.1))
 			Cast<ASteeringGameState>(GetWorld()->GetGameState())->PreviousVelocity = PreviousVelocity;
-		// UE_LOG(LogTemp, Warning, TEXT ("Disable Mode Previous Velocity : %lf, %lf, %lf"), PreviousVelocity.X, PreviousVelocity.Y, PreviousVelocity.Z);
 	}
 }
 
@@ -36,7 +32,6 @@ void UAbstractMode::EnableMode() {
 	// UE_LOG(LogTemp, Warning, TEXT ("Enable Mode Previous Velocity : %lf, %lf, %lf"), PreviousVelocity.X, PreviousVelocity.Y, PreviousVelocity.Z);
 }
 
-// Called every frame
 void UAbstractMode::TickComponent(
 		float DeltaTime,
 		ELevelTick TickType,
@@ -62,16 +57,6 @@ void UAbstractMode::TickComponent(
 		FRotator NewRotation      = FMath::RInterpTo(CurrentRotation, SteeringRotation, DeltaTime, 5);
 		NewRotation.Pitch         = 0.f;
 		Owner->SetActorRotation(NewRotation);
-		// UE_LOG(LogTemp, Warning, TEXT ("Steering Direction : %lf, %lf, %lf"), SteeringDirection.X, SteeringDirection.Y,
-		//        SteeringDirection.Z);
-		// UE_LOG(LogTemp, Warning, TEXT ("SteeringForce : %lf, %lf, %lf"), SteeringForce.X, SteeringForce.Y,
-		//        SteeringForce.Z);
-		// UE_LOG(LogTemp, Warning, TEXT ("Acceleration : %lf, %lf, %lf"), Acceleration.X, Acceleration.Y, Acceleration.Z);
-		// UE_LOG(LogTemp, Warning, TEXT ("Previous Velocity : %lf, %lf, %lf"), PreviousVelocity.X, PreviousVelocity.Y,
-		// PreviousVelocity.Z);
-		// UE_LOG(LogTemp, Warning, TEXT ("Game State Previous Velocity : %lf, %lf, %lf"), Cast<ASteeringGameState>(GetWorld()->GetGameState())->PreviousVelocity.X, Cast<ASteeringGameState>(GetWorld()->GetGameState())->PreviousVelocity.Y,
-		// 	   Cast<ASteeringGameState>(GetWorld()->GetGameState())->PreviousVelocity.Z);
-		// UE_LOG(LogTemp, Warning, TEXT ("Velocity : %lf, %lf, %lf"), Velocity.X, Velocity.Y, Velocity.Z);
 		// UE_LOG(LogTemp, Warning, TEXT ("Result : %lf, %lf, %lf"), Result.X, Result.Y, Result.Z);
 	}
 }

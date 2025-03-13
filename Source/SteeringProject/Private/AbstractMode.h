@@ -12,7 +12,6 @@ class UAbstractMode: public UActorComponent {
 	GENERATED_BODY()
 
 public:
-	// Sets default values for this component's properties
 	UAbstractMode ();
 
 	UPROPERTY(EditAnywhere)
@@ -25,7 +24,6 @@ public:
 	void EnableMode();
 
 protected:
-	// Called when the game starts
 	virtual void BeginPlay () override;
 
 
@@ -34,7 +32,6 @@ protected:
 	virtual FVector ComputeNewVector() PURE_VIRTUAL(UAbstractMode::ComputeNewVector, {return {0, 0, 0};});
 
 public:
-	// Called every frame
 	virtual void TickComponent (
 		float DeltaTime,
 		ELevelTick TickType,
