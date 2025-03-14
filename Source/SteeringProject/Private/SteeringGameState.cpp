@@ -2,11 +2,3 @@
 
 
 #include "SteeringGameState.h"
-
-void ASteeringGameState::SetTarget(const FVector NewTarget) {
-	Target = NewTarget;
-}
-
-FVector ASteeringGameState::GetTarget() const {
-	return Target;
-}

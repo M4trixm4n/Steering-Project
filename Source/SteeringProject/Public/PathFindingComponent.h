@@ -6,6 +6,7 @@
 #include "ArrivalMode.h"
 #include "Directions.h"
 #include "Intersection.h"
+#include "Road.h"
 #include "Components/ActorComponent.h"
 #include "PathFindingComponent.generated.h"
 
@@ -38,9 +39,14 @@ public:
 	EDirection CurrentDirection = EDirection::North;
 	TArray<EDirection> Path;
 	TArray<AIntersection::FAction> Actions;
-	AIntersection::FAction CurrentAction;
+	AIntersection::FAction CurrentAction = {};
 	
 	void FindPath();
 	void EnableCorrectMode () const;
+
+	FVector PreviousVelocity;
+	FVector Target;
+	UPROPERTY()
+	ARoad *TargetRoad = nullptr;
 	
 };

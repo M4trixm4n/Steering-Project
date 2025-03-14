@@ -3,7 +3,6 @@
 
 #include "PathFindingComponent.h"
 
-#include "SteeringGameState.h"
 #include "VectorTypes.h"
 #include "Vehicle.h"
 #include "SteeringProject/SteeringProjectCharacter.h"
@@ -47,7 +46,7 @@ void UPathFindingComponent::TickComponent(float DeltaTime,
 		CurrentAction = Actions[0];
 		Actions.RemoveAt(0);
 		EnableCorrectMode();
-		Cast<ASteeringGameState>(GetWorld()->GetGameState())->SetTarget(CurrentAction.Destination);
+		Target = CurrentAction.Destination;
 	}
 	if (UE::Geometry::Distance(CurrentAction.Destination,
 	                           {GetOwner()->GetActorLocation().X, GetOwner()->GetActorLocation().Y, 0.f}) < 60) {

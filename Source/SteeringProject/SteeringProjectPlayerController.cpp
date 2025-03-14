@@ -10,6 +10,7 @@
 #include "InputActionValue.h"
 #include "EnhancedInputSubsystems.h"
 #include "SteeringGameState.h"
+#include "Vehicle.h"
 #include "Engine/LocalPlayer.h"
 
 DEFINE_LOG_CATEGORY(LogTemplateCharacter);
@@ -25,7 +26,6 @@ void ASteeringProjectPlayerController::BeginPlay() {
 	// Call the base class  
 	Super::BeginPlay();
 	CachedDestination = FVector::ZeroVector;
-	Cast<ASteeringGameState>(GetWorld()->GetGameState())->SetTarget(CachedDestination);
 }
 
 void ASteeringProjectPlayerController::SetupInputComponent() {
@@ -63,14 +63,16 @@ void ASteeringProjectPlayerController::OnInputStarted() {
 	FHitResult Hit;
 	bool bHitSuccessful = false;
 
-	bHitSuccessful = GetHitResultUnderCursor(ECollisionChannel::ECC_Visibility, true, Hit);
+	bHitSuccessful = GetHitResultUnderCursor(ECollisionChannel::ECC_Vehicle, true, Hit);
 	
+	// GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, Hit.GetComponent()->GetClass()->GetDisplayNameText().ToString());
+	// GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, Hit.GetActor()->GetClass()->GetDisplayNameText().ToString());
 	// If we hit a surface, cache the location
-	if (bHitSuccessful && (Hit.Location.Z < 49 || Hit.GetActor()->GetClass())) { //
+	if (bHitSuccessful && (Hit.Location.Z < 49 || Hit.GetActor()->GetClass())) {
 		// GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, FString("Hit : ") + std::to_string(Hit.Location.X).c_str() + " " + std::to_string(Hit.Location.Y).c_str() + " " + std::to_string(Hit.Location.Z).c_str());
 		CachedDestination = Hit.Location;
 	}
-	Cast<ASteeringGameState>(GetWorld()->GetGameState())->SetTarget(CachedDestination);
+	Cast<AVehicle>(GetPawn())->PathFindingComp->TargetRoad = Cast<ARoad>(Hit.GetActor());
 }
 
 // Triggered every frame when the input is held down

@@ -3,8 +3,6 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "ArrivalMode.h"
-#include "SeekMode.h"
 #include "GameFramework/GameStateBase.h"
 #include "SteeringGameState.generated.h"
 
@@ -15,17 +13,4 @@ UCLASS()
 class STEERINGPROJECT_API ASteeringGameState: public AGameStateBase {
 	GENERATED_BODY()
 
-public:
-	FVector Target;
-
-	void SetTarget(const FVector NewTarget);
-	FVector GetTarget() const;
-
-	FVector PreviousVelocity;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="ModeComponents")
-	USeekMode* SeekMode;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="ModeComponents")
-	UArrivalMode* ArrivalMode;
-	
 };

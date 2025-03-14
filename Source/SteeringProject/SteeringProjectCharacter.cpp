@@ -13,13 +13,12 @@ ASteeringProjectCharacter::ASteeringProjectCharacter() {
 	bUseControllerRotationYaw   = false;
 	bUseControllerRotationRoll  = false;
 
-	GetCharacterMovement()->bOrientRotationToMovement = true; // Rotate character to moving direction
-	GetCharacterMovement()->RotationRate              = FRotator(0.f, 640.f, 0.f);
-	GetCharacterMovement()->bConstrainToPlane         = true;
-	GetCharacterMovement()->bSnapToPlaneAtStart       = true;
-
 	PrimaryActorTick.bCanEverTick          = true;
 	PrimaryActorTick.bStartWithTickEnabled = true;
+	
+	PathFindingComp = CreateDefaultSubobject<UPathFindingComponent>(TEXT("PathFinding"));
+	SeekComp = CreateDefaultSubobject<USeekMode>(TEXT("SeekMode"));
+	ArrivalComp = CreateDefaultSubobject<UArrivalMode>(TEXT("ArrivalMode"));
 }
 
 void ASteeringProjectCharacter::Tick(float DeltaSeconds) {
@@ -28,16 +27,6 @@ void ASteeringProjectCharacter::Tick(float DeltaSeconds) {
 
 void ASteeringProjectCharacter::BeginPlay() {
 	Super::BeginPlay();
-	
-	UActorComponent *Seek = NewObject<UActorComponent>(this, USeekMode::StaticClass(), "SeekMode");
-	Seek->RegisterComponent();
-	this->AddInstanceComponent(Seek);
-	UActorComponent *Arrival = NewObject<UActorComponent>(this, UArrivalMode::StaticClass(), "ArrivalMode");
-	Arrival->RegisterComponent();
-	this->AddInstanceComponent(Arrival);
-	
-	SeekComp = Cast<USeekMode>(Seek);
-	ArrivalComp = Cast<UArrivalMode>(Arrival);
 	
 	TArray<AActor*> FoundActors;
 	UGameplayStatics::GetAllActorsWithTag(GetWorld(), FName("AIStart"), FoundActors);

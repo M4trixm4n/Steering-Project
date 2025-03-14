@@ -10,7 +10,7 @@
 #include "SteeringProjectCharacter.generated.h"
 
 UCLASS(Blueprintable)
-class ASteeringProjectCharacter: public ACharacter {
+class ASteeringProjectCharacter: public APawn {
 	GENERATED_BODY()
 
 public:
