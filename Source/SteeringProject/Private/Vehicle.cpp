@@ -33,7 +33,7 @@ void AVehicle::BeginPlay () {
 	TArray<AActor*> FoundActors;
 	UGameplayStatics::GetAllActorsWithTag(GetWorld(), FName("PlayerStart"), FoundActors);
 	if (FoundActors.Num() > 0) {
-		PathFindingComp->CurrentIntersection = Cast<AIntersection>(FoundActors[0]);
+		PathFindingComp->CurrentIntersection = Cast<AIntersection>(FoundActors[0])->North;
 	}
 
 }

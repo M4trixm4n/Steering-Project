@@ -15,6 +15,19 @@ UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class STEERINGPROJECT_API UPathFindingComponent: public UActorComponent {
 	GENERATED_BODY()
 
+	struct FPath {
+		TArray<AIntersection *> Path;
+		float Cost;
+
+		FPath Copy () const {
+			return FPath(Path, Cost);
+		}
+
+		bool operator< (const FPath &Other) const {
+			return Cost < Other.Cost;
+		}
+	};
+
 public:
 	UPathFindingComponent();
 
@@ -42,6 +55,7 @@ public:
 	AIntersection::FAction CurrentAction = {};
 	
 	void FindPath();
+	TArray<EDirection> ConvertPathToDirection(FPath NewPath) const;
 	void EnableCorrectMode () const;
 
 	FVector PreviousVelocity;

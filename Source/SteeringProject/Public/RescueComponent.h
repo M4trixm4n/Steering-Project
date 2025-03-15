@@ -18,7 +18,7 @@ protected:
 	virtual void BeginPlay() override;
 
 public:
-	FCollisionShape CollisionSphere = FCollisionShape::MakeSphere(100.0f);
+	FCollisionShape CollisionSphere = FCollisionShape::MakeSphere(250.0f);
 	TArray<FHitResult> OutResults;
 	bool bCarryingVictim = false;
 	

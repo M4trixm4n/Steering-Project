@@ -68,11 +68,12 @@ void ASteeringProjectPlayerController::OnInputStarted() {
 	// GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, Hit.GetComponent()->GetClass()->GetDisplayNameText().ToString());
 	// GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, Hit.GetActor()->GetClass()->GetDisplayNameText().ToString());
 	// If we hit a surface, cache the location
-	if (bHitSuccessful && (Hit.Location.Z < 49 || Hit.GetActor()->GetClass())) {
+	if (bHitSuccessful && (Hit.Location.Z < 49 || Hit.GetComponent()->GetClass()->GetDisplayNameText().ToString() == "Box Collision")) {
 		// GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, FString("Hit : ") + std::to_string(Hit.Location.X).c_str() + " " + std::to_string(Hit.Location.Y).c_str() + " " + std::to_string(Hit.Location.Z).c_str());
 		CachedDestination = Hit.Location;
+		Cast<AVehicle>(GetPawn())->PathFindingComp->TargetRoad = Cast<ARoad>(Hit.GetActor());
+		Cast<AVehicle>(GetPawn())->PathFindingComp->Path = {};
 	}
-	Cast<AVehicle>(GetPawn())->PathFindingComp->TargetRoad = Cast<ARoad>(Hit.GetActor());
 }
 
 // Triggered every frame when the input is held down

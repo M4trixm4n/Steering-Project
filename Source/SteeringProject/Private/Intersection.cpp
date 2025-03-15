@@ -101,13 +101,34 @@ TArray<AIntersection::FAction> AIntersection::GetIntersectionActions(EDirection 
 		) const {
 
 	TArray<FAction> Actions;
+
+	if (NextDirection == EDirection::None) {
+		switch (CurrentDirection) {
+			case EDirection::North:
+				Actions.Add({ENeededMode::Arrival, GetFromSouthPoint()});
+			break;
+			case EDirection::East:
+				Actions.Add({ENeededMode::Arrival, GetFromWestPoint()});
+			break;
+			case EDirection::South:
+				Actions.Add({ENeededMode::Arrival, GetFromNorthPoint()});
+			break;
+			case EDirection::West:
+				Actions.Add({ENeededMode::Arrival, GetFromEastPoint()});
+			break;
+			case EDirection::None:
+				break;
+		}
+		return Actions;
+	}
+	
 	if (!DirectionExists(NextDirection)) return Actions;
 
 	ENeededMode InitialApproach = ENeededMode::Arrival;
 	if (GoingStraight(CurrentDirection, NextDirection)) {
 		InitialApproach = ENeededMode::Seek;
 	}
-	
+
 	switch (CurrentDirection) {
 		case EDirection::North:
 			Actions.Add({InitialApproach, GetFromSouthPoint()});
@@ -166,17 +187,17 @@ TArray<AIntersection::FAction> AIntersection::GetIntersectionActions(EDirection 
 
 	switch (NextDirection) {
 		case EDirection::North:
-			Actions.Add({ENeededMode::Arrival, GetToNorthPoint()});
-		break;
+			Actions.Add({InitialApproach, GetToNorthPoint()});
+			break;
 		case EDirection::East:
-			Actions.Add({ENeededMode::Arrival, GetToEastPoint()});
-		break;
+			Actions.Add({InitialApproach, GetToEastPoint()});
+			break;
 		case EDirection::South:
-			Actions.Add({ENeededMode::Arrival, GetToSouthPoint()});
-		break;
+			Actions.Add({InitialApproach, GetToSouthPoint()});
+			break;
 		case EDirection::West:
-			Actions.Add({ENeededMode::Arrival, GetToWestPoint()});
-		break;
+			Actions.Add({InitialApproach, GetToWestPoint()});
+			break;
 		case EDirection::None:
 			break;
 	}
@@ -184,7 +205,7 @@ TArray<AIntersection::FAction> AIntersection::GetIntersectionActions(EDirection 
 	return Actions;
 }
 
-AIntersection * AIntersection::GetIntersectionInDirection(EDirection Direction) const {
+AIntersection *AIntersection::GetIntersectionInDirection(EDirection Direction) const {
 	switch (Direction) {
 		case EDirection::North:
 			return North;
