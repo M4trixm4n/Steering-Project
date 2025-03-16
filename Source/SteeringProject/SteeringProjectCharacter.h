@@ -5,8 +5,9 @@
 #include "CoreMinimal.h"
 #include "ArrivalMode.h"
 #include "PathFindingComponent.h"
+#include "RescueComponent.h"
 #include "SeekMode.h"
-#include "GameFramework/Character.h"
+#include "Victim.h"
 #include "SteeringProjectCharacter.generated.h"
 
 UCLASS(Blueprintable)
@@ -29,8 +30,16 @@ public:
 	UPROPERTY(BlueprintReadOnly)
 	UArrivalMode *ArrivalComp;
 	
+	UPROPERTY(BlueprintReadOnly)
+	URescueComponent *RescueComp;
+	
 	UPROPERTY(EditAnywhere)
 	UPathFindingComponent *PathFindingComp;
+
+	ARoad *HospitalRoads[2];
+	void ChooseNextVictim ();
+	UPROPERTY()
+	AVictim *ChosenVictim = nullptr;
 
 	virtual void Tick(float DeltaSeconds) override;
 

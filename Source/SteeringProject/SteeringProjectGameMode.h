@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Victim.h"
 #include "GameFramework/GameModeBase.h"
 #include "SteeringProjectGameMode.generated.h"
 
@@ -12,4 +13,8 @@ class ASteeringProjectGameMode: public AGameModeBase {
 
 public:
 	ASteeringProjectGameMode();
+
+	UFUNCTION(BlueprintImplementableEvent)
+	TArray<AVictim *> GetVictims () const;
+	
 };

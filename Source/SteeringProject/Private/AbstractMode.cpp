@@ -51,11 +51,13 @@ void UAbstractMode::TickComponent(
 		FActorComponentTickFunction *ThisTickFunction
 		) {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+	
 	std::variant<AVehicle *, ASteeringProjectCharacter *> Owner;
 	AVehicle *tmp = Cast<AVehicle>(GetOwner());
 	if (tmp) Owner = tmp;
 	ASteeringProjectCharacter *tmp2 = Cast<ASteeringProjectCharacter>(GetOwner());
 	if (tmp2) Owner = tmp2;
+	
 	if (bModeIsActive) {
 		std::visit([&](auto owner) {
 			if (Target != owner->PathFindingComp->Target) Target = owner->PathFindingComp->Target;
